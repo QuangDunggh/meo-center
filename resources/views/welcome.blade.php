@@ -20,6 +20,15 @@
         body {
             font-family: 'Nunito';
         }
+
+        .filter-input {
+            padding: 50px;
+            width: 180px
+        }
+
+        .sl-year-name{
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -40,7 +49,38 @@
         </div>
         @endif
 
-        <div id='calendar'></div>
+        <div class="container">
+            <div class="wrap-filter" style="display: flex">
+                <div class="filter-input">
+                    <label for="">年月</label><br/>
+                    <select class="sl-year-name" name="year-name" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                        <option value="">4</option>
+                        <option value="">5</option>
+                        <option value="">6</option>
+                        <option value="">7</option>
+                        <option value="">8</option>
+                        <option value="">9</option>
+                        <option value="">10</option>
+                        <option value="">11</option>
+                        <option value="">12</option>
+                    </select>
+                </div>
+                <div class="filter-input">
+                    <label for="">順位取得時間r</label><br/>
+                    <input type="text" value="順位取得時間r" disabled>
+                </div>
+                <div class="filter-input">
+                    <label for="">順位取得地点</label><br/>
+                    <input type="text" value="順位取得地点" disabled>
+                </div>
+            </div>
+            <div id='calendar'></div>
+        </div>
+
+       
         </div>
         </div>
     </body>
