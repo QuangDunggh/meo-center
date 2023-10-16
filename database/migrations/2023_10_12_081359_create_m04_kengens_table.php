@@ -14,8 +14,12 @@ class CreateM04KengensTable extends Migration
     public function up()
     {
         Schema::create('m04_kengens', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('UserNo');
+            $table->integer('AnkenNo');
+            $table->dateTime('AddTime');
+            $table->dateTime('UpdateTime');
+            $table->string('UpdateName');
+
         });
     }
 

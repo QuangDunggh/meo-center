@@ -14,8 +14,14 @@ class CreateM02KeywordsTable extends Migration
     public function up()
     {
         Schema::create('m02_keywords', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('AnkenNo');
+            $table->string('Keyword');
+            $table->decimal('Ido');
+            $table->decimal('Keido');
+            $table->integer('KeywordNo');
+            $table->dateTime('AddTime');
+            $table->dateTime('UpdateTime');
+            $table->string('UpdateName');
         });
     }
 

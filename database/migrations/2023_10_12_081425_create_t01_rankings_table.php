@@ -14,8 +14,11 @@ class CreateT01RankingsTable extends Migration
     public function up()
     {
         Schema::create('t01_rankings', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->string('Seq');
+            $table->string('KeywordNo');
+            $table->dateTime('AddTime');
+            $table->dateTime('UpdateTime');
+            $table->string('UpdateName');
         });
     }
 

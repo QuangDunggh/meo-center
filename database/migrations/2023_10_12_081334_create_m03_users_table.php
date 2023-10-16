@@ -14,8 +14,13 @@ class CreateM03UsersTable extends Migration
     public function up()
     {
         Schema::create('m03_users', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->string('UserName');
+            $table->integer('UserNo');
+            $table->tinyInteger('IsShowJikan');
+            $table->dateTime('AddTime');
+            $table->dateTime('UpdateTime');
+            $table->string('UpdateName');
+        
         });
     }
 

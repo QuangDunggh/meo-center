@@ -1,0 +1,52 @@
+body {
+    font-family: 'Nunito';
+    margin: 0;
+    background-color: rgb(188, 188, 190);
+}
+
+.container {
+    width: 1500px;
+    margin: 0 auto;
+}
+
+.filter-input {
+    text-align: left;
+    padding: 50px 50px 50px 0px;
+    width: 180px
+}
+
+.sl-year-name {
+    width: 100%;
+}
+
+.header {
+    background-color: rgb(34, 33, 33);
+    height: 60px;
+}
+
+.navbar-header>a {
+    color: rgb(255, 153, 0);
+}
+
+.title {
+    padding-top: 18px;
+    justify-content: center;
+}
+
+h4 {
+    margin: 0;
+    margin-left: 10px;
+    color: orange;
+
+}
+
+.content-calender {
+    background-color: aliceblue;
+    max-width: 100%;
+
+}
+
+#calender {
+    margin: 40px;
+    max-width: 80%;
+}
