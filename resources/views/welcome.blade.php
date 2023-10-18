@@ -4,9 +4,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Laravel</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
@@ -14,9 +23,25 @@
 
 <body class="antialiased">
     <div class="header">
-        <div class="title">
-            <h4>Meo Center</h4>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" style="color: orange">Meo center</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
     <div class="main">
 
@@ -37,47 +62,57 @@
             @endif --}}
 
         <div class="container">
-            <div class="wrap-filter" style="display: flex">
-                <div class="filter-input">
-                    <label for="">年月</label><br />
-                    <select class="sl-year-name" name="year-name" id="">
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                        <option value="">4</option>
-                        <option value="">5</option>
-                        <option value="">6</option>
-                        <option value="">7</option>
-                        <option value="">8</option>
-                        <option value="">9</option>
-                        <option value="">10</option>
-                        <option value="">11</option>
-                        <option value="">12</option>
-                    </select>
-                </div>
-                <div class="filter-input">
-                    <label for="">順位取得時間r</label><br />
-                    <input type="text" value="順位取得時間r" disabled>
-                </div>
-                <div class="filter-input">
-                    <label for="">順位取得地点</label><br />
-                    <input type="text" value="順位取得地点" disabled>
+            <div class="" style="display: flex">
+                <div class="input-group mb-3">
+                    <div class="me-5">
+                        <label for="">年月</label><br />
+                        <select class="form-select mb-3" id="selectYearMonth" aria-label="Default select example">
+                        </select>
+                    </div>
+                    <div class="me-5">
+                        <label for="">順位取得時間r</label><br />
+                        <input class="form-control" type="text" value="順位取得時間r" disabled>
+                    </div>
+                    <div>
+                        <label for="">順位取得地点</label><br />
+                        <input class="form-control" type="text" value="順位取得地点" disabled>
+                    </div>
                 </div>
             </div>
             <div class="content-calender">
-                <div id='calendar'></div>
+                <div id='calendar' style="width: 100%; display: inline-block;"></div>
             </div>
 
 
-            <div class="table">
-                <table>
+            <div class="table" style="margin-top: 50px; background:white">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
+                            <th scope="col">Date</th>
+                            <th scope="col">Ranking</th>
+                            <th scope="col">Keyword</th>
                         </tr>
                     </thead>
+                    <tbody id="content-table">
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry the Bird</td>
+                            <td>Thornton</td>
+
+                        </tr>
+                    </tbody>
                 </table>
             </div>
 
@@ -87,27 +122,92 @@
     </div>
 
 </body>
-{{-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.9/index.global.min.js'></script> --}}
-<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.9/index.global.min.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.9/index.global.min.js'></script>
-<script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
-<script>
-    $.ajax({
-        url: "http://127.0.0.1:8000/query"
-    }).done(function(data) {
-        console.log(data);
-        let events = data;
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            height: 700,
-            contentHeight: 700
-        });
-        calendar.addEventSource(events);
-        calendar.render();
 
-    }).fail(function(jqxhr) {
-        console.log(jqxhr);;
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        let data = @json($events);
+        console.log(data);
+        data.sort
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev, next today',
+                center: 'title',
+                right: 'month, agendaWeek, agendaDay'
+            },
+            buttonText: {
+                prevYear: '&laquo;', // <<
+                nextYear: '&raquo;', // >>
+                today: '今日',
+                month: '月',
+                week: '週',
+                day: '日'
+            },
+
+            monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+
+            monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
+                '12月'
+            ],
+
+            dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+
+            dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+
+            selectable: true,
+
+            selectHelper: true,
+            events: data
+        });
+        // calendar.render();
+
+        function renderOptionYearAnhMonth(yearStart) {
+            const currentTime = new Date();
+            const lengthYear = currentTime.getFullYear() - yearStart;
+            let htmlOption = "";
+            for (let i = 0; i <= lengthYear; i++) {
+                for (let j = 1; j <= 12; j++) {
+                    if(j < 10) {
+                        htmlOption += `<option value="${yearStart + i}-0${j}">${j}月 ${yearStart + i}</option>`;
+                    } else {
+                        htmlOption += `<option value="${yearStart + i}-${j}">${j}月 ${yearStart + i}</option>`;
+                    } 
+                }
+            }
+
+            $("#selectYearMonth").html(htmlOption);
+        }
+
+        function getDaysInMonth(month, year) {
+            let date = new Date(year, month, 1);
+            let days = [];
+            while (date.getMonth() === month) {
+                days.push(new Date(date).toLocaleDateString('sv'));
+                date.setDate(date.getDate() + 1);
+            }
+            return days;
+        }
+
+
+        function renderDateTable(month, year) {
+            let listDay = getDaysInMonth(month, year);
+            let html;
+            listDay.forEach(element => {
+                html += `<tr><th scope="row">${element}</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td></tr>`;
+
+            });
+
+            $('#content-table').html(html);
+        }
+        renderDateTable(1, 2023);
+
+        renderOptionYearAnhMonth(2019);
     })
 </script>
 
