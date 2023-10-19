@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/query', [HomeController::class, 'getData'])->name('get-data');
+Route::post('/query', [HomeController::class, 'getData'])->name('get-data');
+
+Route::get('/login/wordpress', [LoginController::class,'redirectToWordPress'])->name('redirectToWordPress');
+Route::get('/login/wordpress/callback', [LoginController::class,'handleWordPressCallback'])->name('handleWordPressCallback');

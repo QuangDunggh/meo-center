@@ -94,24 +94,6 @@
                         </tr>
                     </thead>
                     <tbody id="content-table">
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry the Bird</td>
-                            <td>Thornton</td>
-
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -132,7 +114,7 @@
         });
         let data = @json($events);
         console.log(data);
-        data.sort
+
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev, next today',
@@ -171,41 +153,64 @@
             let htmlOption = "";
             for (let i = 0; i <= lengthYear; i++) {
                 for (let j = 1; j <= 12; j++) {
-                    if(j < 10) {
+                    if (j < 10) {
                         htmlOption += `<option value="${yearStart + i}-0${j}">${j}月 ${yearStart + i}</option>`;
                     } else {
                         htmlOption += `<option value="${yearStart + i}-${j}">${j}月 ${yearStart + i}</option>`;
-                    } 
+                    }
                 }
             }
-
             $("#selectYearMonth").html(htmlOption);
         }
 
         function getDaysInMonth(month, year) {
             let date = new Date(year, month, 1);
+           
             let days = [];
+            console.log(date.getMonth());
+            console.log(parseInt(month));
             while (date.getMonth() === month) {
                 days.push(new Date(date).toLocaleDateString('sv'));
                 date.setDate(date.getDate() + 1);
             }
-            return days;
+            console.log(days);
+            return days.reverse();
         }
 
 
         function renderDateTable(month, year) {
-            let listDay = getDaysInMonth(month, year);
+            let listDay = getDaysInMonth(parseInt(month), year);
             let html;
             listDay.forEach(element => {
-                html += `<tr><th scope="row">${element}</th>
+                html += `<tr><th scope="row" id="${element}">${element}</th>
                             <td>Jacob</td>
                             <td>Thornton</td></tr>`;
 
             });
-
             $('#content-table').html(html);
         }
-        renderDateTable(1, 2023);
+
+        $("#selectYearMonth").on("change", function(e) {
+            let data = $("#selectYearMonth").val();
+
+            let yearAndMonth = data.split('-');
+            console.log(yearAndMonth);
+            renderDateTable(yearAndMonth[1], yearAndMonth[0]);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: '/query',
+                data: {
+                    monthAndYear: data
+                }
+            }).done(function(data) {
+                console.log(data);
+            }).fail(function(jqxhr) {
+                console.log(jqxhr);
+            });
+        })
 
         renderOptionYearAnhMonth(2019);
     })

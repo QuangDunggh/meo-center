@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -20,6 +21,23 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    
+
+    public function redirectToWordPress()
+    {
+        return Socialite::driver('wordpress')->redirect();
+    }
+
+    public function handleWordPressCallback()
+    {
+        
+        $user = Socialite::driver('wordpress')->user();
+
+        // Xác thực người dùng trong ứng dụng Laravel của bạn bằng $user->token và dữ liệu người dùng.
+
+        return redirect()->intended('/'); // Chuyển hướng đến vị trí mong muốn sau khi đăng nhập.
+    }
 
     /**
      * Where to redirect users after login.

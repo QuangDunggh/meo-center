@@ -45,8 +45,16 @@ class HomeController extends Controller
         return view('welcome', ['events' => $result]);
     }
 
-    public function getData()
+    public function getData(Request $request)
     {
+       
+
+        $monthAndYear = $request->monthAndYear;
+
+        $arrayMonthAndYear = explode('-', $monthAndYear);
+
+        $year = $arrayMonthAndYear[0];
+        $month = $arrayMonthAndYear[1];
         // $result = DB::select('WITH recursive child(AnkenNo, OyaAnkenNo, AnkenName) AS(
         // SELECT AnkenNo, OyaAnkenNo,AnkenName 
         // FROM M01_Anken 
@@ -56,13 +64,12 @@ class HomeController extends Controller
         // WHERE M01_Anken.OyaAnkenNo = child.AnkenNo) 
         // SELECT AnkenNo, OyaAnkenNo, AnkenName 
         // FROM child', [1]);
-        $now = date('m-d-Y');
 
-        $list = DB::select('SELECT T01_Ranking.KeywordNo, T01_Ranking.Ranking, M02_Keyword.Keyword, T01_Ranking.UpdateTime, T01_Ranking.AddTime 
+        $list = DB::select('SELECT T01_Ranking.KeywordNo, T01_Ranking.Ranking, M02_Keyword.Keyword, DATE(T01_Ranking.UpdateTime) AS UpdateTime, DATE(T01_Ranking.AddTime) AS AddTime
         FROM T01_Ranking 
         JOIN M02_Keyword 
         ON T01_Ranking.KeywordNo = M02_Keyword.KeywordNo
-        WHERE MONTH(T01_Ranking.UpdateTime) = ? AND YEAR(T01_Ranking.UpdateTime) = ? ORDER BY T01_Ranking.Ranking ASC', ['01', '2023']);
+        WHERE MONTH(T01_Ranking.UpdateTime) = ? AND YEAR(T01_Ranking.UpdateTime) = ? ORDER BY T01_Ranking.Ranking ASC', [$month, $year]);
 
         $result = [];
         foreach ($list as $key => $value) {
